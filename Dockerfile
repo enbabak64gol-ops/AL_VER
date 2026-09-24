@@ -1,15 +1,6 @@
 FROM alpine:3.20
-ARG PB_VERSION=0.40.4
-RUN apk add --no-cache ca-certificates unzip wget
-RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip -O /tmp/pb.zip \
- && unzip -q /tmp/pb.zip -d /pb \
- && rm /tmp/pb.zip
-WORKDIR /pb
-COPY pb_migrations /pb/pb_migrations
-COPY public /pb/pb_public
-COPY pb_hooks /pb/pb_hooks
-
-# Persistent data lives on a Railway Volume mounted at /pb/pb_data
-
-EXPOSE 8090
-CMD ["/pb/pocketbase","serve","--http=0.0.0.0:8090"]
+RUN apk add --no-cache busybox-extras
+WORKDIR /app
+COPY index.html admin.html main.pb.js 1700000000_init.js ./
+EXPOSE 3000
+CMD ["busybox", "httpd", "-f", "-p", "3000", "-h", "/app"]
