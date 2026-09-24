@@ -10,6 +10,6 @@ COPY public /pb/pb_public
 COPY pb_hooks /pb/pb_hooks
 
 # Persistent data lives on a Railway Volume mounted at /pb/pb_data
-VOLUME /pb/pb_data
+
 EXPOSE 8090
 CMD ["/pb/pocketbase","serve","--http=0.0.0.0:8090"]
